@@ -1,25 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const Structure = () => {
+
+    const [data, setData] = useState([{
+        usrname: '',
+        dept: '',
+        rate: '',
+    }])
+
+    const [details, setDetails] = useState([]);
+
+    const nameEvent = (e) => {
+        // const name = e.target.name
+        // const value = e.target.value 
+        setData({ ...data, [e.target.name]: e.target.value })
+        // console.log(data);
+    }
+
+    const Submited = (e) => {
+        e.preventDefault()
+        const newData = { ...data, id: new Date().getTime().toString() }
+        // console.log(newData);
+        setDetails([...details, newData])
+        console.log(details);
+
+
+    }
+    return (
+        <>
+            <div className="top__containt"><h1>FEEDBACK FORM</h1><hr /></div>
+            <form onSubmit={Submited}>
+                <div className="all__inputs">
+                    <label>Name:- </label>
+                    <input
+                        type="text"
+                        onChange={nameEvent}
+                        value={data.usrname}
+                        name='name'
+                    />
+                    <br /><br />
+                    <label className="dept">Department:- </label>
+                    <input
+                        type="text"
+                        onChange={nameEvent}
+                        value={data.dept}
+                        name='dept'
+                    /><br /><br />
+                    <label>Rating:- </label>
+                    <input
+                        type="number"
+                        onChange={nameEvent}
+                        value={data.rate}
+                        name='rate'
+                    /><br />
+                </div>
+                <div className="button"><input type="Submit" /></div>
+            </form>
+            <div className="result">
+                {
+                    details.map((e) => {
+                        return (
+                            <div className="section">
+                                <p>Name: {e.name}</p>
+                                <p>Department: {e.dept}</p>
+                                <p>Rating: {e.rate}</p>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </>
+    )
 }
 
-export default App;
+export default Structure;
